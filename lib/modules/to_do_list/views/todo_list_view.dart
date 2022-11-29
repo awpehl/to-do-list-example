@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:to_do_list/modules/to_do_list/controllers/to_do_list_controller.dart';
+import 'package:to_do_list/modules/to_do_list/controllers/todo_list_controller.dart';
 import 'package:to_do_list/routes/app_routes.dart';
 import 'package:to_do_list/utils/color_util.dart';
-import 'package:to_do_list/widgets/to_do_card.dart';
+import 'package:to_do_list/widgets/todo_card.dart';
 
 class ToDoListView extends GetView<ToDoListController> {
   const ToDoListView({Key? key}) : super(key: key);

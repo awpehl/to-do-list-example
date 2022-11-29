@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/to_do_list_controller.dart';
+import '../controllers/todo_list_controller.dart';
 
 class ToDoListBinding extends Bindings {
   @override

@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-import '../controllers/add_new_list_controller.dart';
+import '../controllers/todo_form_controller.dart';
 
 class AddNewListBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddNewListController>(
-      () => AddNewListController(),
+    Get.lazyPut<ToDoFormController>(
+      () => ToDoFormController(),
     );
   }
 }

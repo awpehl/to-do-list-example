@@ -8,10 +8,14 @@ class DateField extends StatelessWidget {
     required this.hintText,
     this.selectedDate,
     required this.onTap,
+    this.errorMsg = 'Please select a date',
+    this.showError = false,
   }) : super(key: key);
 
   final String label;
   final String hintText;
+  final String errorMsg;
+  final bool showError;
   final String? selectedDate;
   final void Function() onTap;
 
@@ -29,7 +33,7 @@ class DateField extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(0),
-              border: Border.all(color: Colors.black, width: 1),
+              border: Border.all(color: showError ? Colors.red : Colors.black, width: showError ? 2 : 1),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -43,6 +47,10 @@ class DateField extends StatelessWidget {
             ),
           ),
         ),
+        if (showError) ...<Widget>[
+          const SizedBox(height: 5),
+          Text("    $errorMsg", style: const TextStyle(color: Colors.red, fontSize: 12)),
+        ]
       ],
     );
   }
