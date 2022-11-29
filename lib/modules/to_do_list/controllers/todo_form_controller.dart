@@ -1,28 +1,26 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/data/local_storage/shared_preferences.dart';
+import 'package:to_do_list/data/models/todo_model.dart';
+import 'package:to_do_list/modules/to_do_list/controllers/todo_list_controller.dart';
+import 'package:to_do_list/utils/date_util.dart';
+import 'package:to_do_list/utils/toast_util.dart';
 
 class ToDoFormController extends GetxController {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final FocusNode titleFocusNode = FocusNode();
+  final ToDoListController toDoListController = Get.find<ToDoListController>();
 
-  //RxString toDoTitleField = ''.obs;
-  RxBool showTitleError = false.obs;
-  RxBool showStartDateError = false.obs;
-  RxBool showEndDateError = false.obs;
-
-  Rxn<DateTime> startDateField = Rxn<DateTime>();
-  Rxn<DateTime> endDateField = Rxn<DateTime>();
+  Rxn<DateTime> startDate = Rxn<DateTime>();
+  Rxn<DateTime> endDate = Rxn<DateTime>();
+  ToDoModel? toDoEdit;
 
   @override
   void onInit() {
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    checkIfEdit();
   }
 
   @override
@@ -32,33 +30,140 @@ class ToDoFormController extends GetxController {
     super.onClose();
   }
 
-  void validateTitle() {
-    if (titleController.text.isEmpty) {
-      showStartDateError.value = true;
-    } else {
-      showStartDateError.value = false;
+  void checkIfEdit() {
+    toDoEdit = Get.arguments;
+    if (toDoEdit != null) {
+      titleController.text = toDoEdit!.title!;
+      startDate.value = toDoEdit!.startDate;
+      endDate.value = toDoEdit!.endDate;
+      startDateController.text = DateUtil.formatDefaultDate(toDoEdit!.startDate!);
+      endDateController.text = DateUtil.formatDefaultDate(toDoEdit!.endDate!);
     }
   }
 
-  void validateStartDate() {
-    if (startDateField.value == null) {
-      showStartDateError.value = true;
-    } else {
-      showStartDateError.value = false;
+  void onCreateToDo() {
+    ToDoModel toDo = ToDoModel(
+      id: UniqueKey().toString(),
+      title: titleController.text,
+      startDate: startDate.value,
+      endDate: endDate.value,
+      isDone: false,
+      timeLeft: DateTime.now(),
+    );
+    toDoListController.toDoList = <ToDoModel>[toDo, ...toDoListController.toDoList];
+    toDoListController.update();
+    UserSharedPreferences.setToDoList(toDoListController.toDoList);
+    Get.back();
+    ToastUtil.snackBar(title: 'Success', message: 'To-Do added successfully');
+  }
+
+  void onEditToDo() {
+    ToDoModel toDo = ToDoModel(
+      id: toDoEdit!.id,
+      title: titleController.text,
+      startDate: startDate.value,
+      endDate: endDate.value,
+      isDone: toDoEdit!.isDone,
+      timeLeft: DateTime.now(),
+    );
+    toDoListController.toDoList.asMap().forEach((int index, ToDoModel e) {
+      if (e.id == toDoEdit!.id) {
+        toDoListController.toDoList[index] = toDo;
+      }
+    });
+    toDoListController.update();
+    UserSharedPreferences.setToDoList(toDoListController.toDoList);
+    Get.back();
+    ToastUtil.snackBar(title: 'Success', message: 'To-Do update successfully');
+  }
+
+  Future<void> pickStartDate(BuildContext context) async {
+    titleFocusNode.unfocus();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: startDate.value ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+      currentDate: startDate.value ?? DateTime.now(),
+    );
+    if (picked != null && picked != startDate.value) {
+      startDate.value = picked;
+      startDateController.text = DateUtil.formatDefaultDate(startDate.value!);
     }
   }
 
-  void validateEndDate() {
-    if (endDateField.value == null) {
-      showEndDateError.value = true;
-    } else {
-      showEndDateError.value = false;
+  Future<void> pickEndDate(BuildContext context) async {
+    titleFocusNode.unfocus();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: endDate.value ?? DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+      currentDate: endDate.value ?? DateTime.now(),
+    );
+
+    if (picked != null && picked != endDate.value) {
+      endDate.value = picked;
+      endDateController.text = DateUtil.formatDefaultDate(endDate.value!);
     }
   }
 
-  void validateToDoForm() {
-    validateTitle();
-    validateStartDate();
-    validateEndDate();
+  String? validateStartDate(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please select a start date';
+    } else if (startDate.value != null && endDate.value != null && startDate.value!.isAfter(endDate.value!)) {
+      return 'Start date must be before end date';
+    }
+    return null;
   }
+
+  String? validateEndDate(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please select a end date';
+    } else if (startDate.value != null && endDate.value != null && startDate.value!.isAfter(endDate.value!)) {
+      return 'End date must be after start date';
+    }
+    return null;
+  }
+
+  DateTime getEndDateFirstDate() {
+    if (toDoEdit != null) {
+      return toDoEdit!.startDate!;
+    } else if (startDate.value != null) {
+      return startDate.value!;
+    } else {
+      return DateTime.now();
+    }
+  }
+
+  DateTime getStartDateLastDate() {
+    if (toDoEdit != null) {
+      return toDoEdit!.endDate!;
+    } else if (endDate.value != null) {
+      return endDate.value!;
+    } else {
+      return DateTime(2100);
+    }
+  }
+
+  String? validateTitle(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please key in your To-Do title';
+    }
+    return null;
+  }
+
+  // String? validateStartDate(String? value) {
+  //   if (value == null || value.trim().isEmpty) {
+  //     return 'Please select a start date';
+  //   }
+  //   return null;
+  // }
+
+  // String? validateEndDate(String? value) {
+  //   if (value == null || value.trim().isEmpty) {
+  //     return 'Please select an end date';
+  //   }
+  //   return null;
+  // }
 }

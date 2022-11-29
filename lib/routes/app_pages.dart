@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:to_do_list/modules/to_do_list/bindings/add_list_binding.dart';
+import 'package:to_do_list/modules/to_do_list/bindings/todo_form_binding.dart';
 import 'package:to_do_list/modules/to_do_list/bindings/todo_list_binding.dart';
-import 'package:to_do_list/modules/to_do_list/views/add_new_list_view.dart';
+import 'package:to_do_list/modules/to_do_list/views/todo_form_view.dart';
 import 'package:to_do_list/modules/to_do_list/views/todo_list_view.dart';
 import 'package:to_do_list/routes/app_routes.dart';
 
@@ -15,8 +15,8 @@ class AppPages {
       binding: ToDoListBinding(),
     ),
     GetPage(
-      name: AppRoutes.addToDo,
-      page: () => const AddNewListView(),
+      name: AppRoutes.toDoForm,
+      page: () => const ToDoFormView(),
       binding: AddNewListBinding(),
     ),
   ];
