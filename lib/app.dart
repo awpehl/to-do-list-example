@@ -10,20 +10,13 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "ToDoList",
+      title: "To-Do List",
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.cupertino,
       scrollBehavior: const CupertinoScrollBehavior(),
       initialRoute: AppPages.initialRoute,
       getPages: AppPages.routes,
       theme: ThemeData(
-        // textButtonTheme: TextButtonThemeData(
-        //   style: ButtonStyle(
-        //     padding: MaterialStateProperty.all(EdgeInsets.zero),
-        //     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),
-        //   ),
-        // ),
-        // text font
         unselectedWidgetColor: Colors.white,
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFFffbe23),

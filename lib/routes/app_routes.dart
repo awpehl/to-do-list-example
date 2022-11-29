@@ -1,4 +1,4 @@
 class AppRoutes {
-  static const String toDoList = '/to_do_list';
-  static const String toDoForm = '/to_do_list/form';
+  static const String toDoList = '/list';
+  static const String toDoForm = '/list/form';
 }
