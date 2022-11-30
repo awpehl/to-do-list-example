@@ -61,6 +61,8 @@ flutter test
 ## Continuos Integration
 - A simple CI/CD was setup with [CodeMagic](https://codemagic.io). New build will be triggered by every new push to main branch for this repository. 
 ![cic](https://user-images.githubusercontent.com/76787324/204739065-321debef-73af-4d76-81de-2e331ad02c93.png)
+![codemagic](https://user-images.githubusercontent.com/76787324/204745635-39feb15a-03b4-4dd8-9797-e1d240d373d5.png)
+
 
 ## Setup Project
 - Clone repository
