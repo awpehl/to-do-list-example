@@ -61,3 +61,17 @@ flutter test
 ## Continuos Integration
 - A simple CI/CD was setup with [CodeMagic](https://codemagic.io). New build will be triggered by every new push to main branch for this repository. 
 ![cic](https://user-images.githubusercontent.com/76787324/204739065-321debef-73af-4d76-81de-2e331ad02c93.png)
+
+## Setup Project
+- Clone repository
+```bash
+git clone https://github.com/weeyc/to-do-list.git  
+```
+
+- To run the app, simply write
+```bash
+flutter pub get  
+```
+```bash
+flutter run 
+```
