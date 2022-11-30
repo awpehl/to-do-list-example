@@ -14,7 +14,7 @@ class ToDoIllustration extends StatelessWidget {
         children: <Widget>[
           SvgPicture.asset('assets/illustrations/list.svg', height: 350, width: 350),
           const SizedBox(height: 10),
-          const Text('Create To Do List Now', style: TextStyle(color: ColorUtil.secondaryText, fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text('Create To Do List Now', style: TextStyle(color: ColorUtil.lightGray, fontSize: 20, fontWeight: FontWeight.bold)),
         ],
       ),
     );

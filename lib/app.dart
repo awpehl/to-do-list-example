@@ -19,17 +19,11 @@ class App extends StatelessWidget {
       theme: ThemeData(
         unselectedWidgetColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFffbe23),
+          backgroundColor: ColorUtil.theme,
           elevation: 0,
           centerTitle: false,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           elevation: 10,

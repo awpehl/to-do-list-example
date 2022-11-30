@@ -4,12 +4,12 @@ import 'package:to_do_list/data/local_storage/shared_preferences.dart';
 import 'package:to_do_list/data/models/todo_model.dart';
 
 class ToDoListController extends GetxController {
-  RxBool isDone = false.obs;
   List<ToDoModel> toDoList = <ToDoModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
+    // check if there is any to-do list in shared preferences
     toDoList = UserSharedPreferences.getToDoList();
   }
 
@@ -23,6 +23,7 @@ class ToDoListController extends GetxController {
     super.onClose();
   }
 
+  // delete to-do when on long press
   void deleteToDo(String id) {
     Get.dialog(
       AlertDialog(

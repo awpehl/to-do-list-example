@@ -10,8 +10,8 @@ class ToDoFormController extends GetxController {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
-  final FocusNode titleFocusNode = FocusNode();
   final ToDoListController toDoListController = Get.find<ToDoListController>();
+  final FocusNode titleFocusNode = FocusNode();
 
   Rxn<DateTime> startDate = Rxn<DateTime>();
   Rxn<DateTime> endDate = Rxn<DateTime>();
@@ -30,6 +30,27 @@ class ToDoFormController extends GetxController {
     super.onClose();
   }
 
+  // create new to-do
+  void onCreateToDo() {
+    ToDoModel toDo = ToDoModel(
+      id: UniqueKey().toString(),
+      title: titleController.text,
+      startDate: startDate.value,
+      endDate: endDate.value,
+      isDone: false,
+      timeLeft: DateTime.now(),
+    );
+    // add new to-do on top of the list
+    toDoListController.toDoList = <ToDoModel>[toDo, ...toDoListController.toDoList];
+    // update to-do list
+    toDoListController.update();
+    // save to-do list to shared preferences
+    UserSharedPreferences.setToDoList(toDoListController.toDoList);
+    Get.back();
+    ToastUtil.snackBar(title: 'Success', message: 'To-Do added successfully');
+  }
+
+  // check if from edit to-do
   void checkIfEdit() {
     toDoEdit = Get.arguments;
     if (toDoEdit != null) {
@@ -41,22 +62,6 @@ class ToDoFormController extends GetxController {
     }
   }
 
-  void onCreateToDo() {
-    ToDoModel toDo = ToDoModel(
-      id: UniqueKey().toString(),
-      title: titleController.text,
-      startDate: startDate.value,
-      endDate: endDate.value,
-      isDone: false,
-      timeLeft: DateTime.now(),
-    );
-    toDoListController.toDoList = <ToDoModel>[toDo, ...toDoListController.toDoList];
-    toDoListController.update();
-    UserSharedPreferences.setToDoList(toDoListController.toDoList);
-    Get.back();
-    ToastUtil.snackBar(title: 'Success', message: 'To-Do added successfully');
-  }
-
   void onEditToDo() {
     ToDoModel toDo = ToDoModel(
       id: toDoEdit!.id,
@@ -66,17 +71,21 @@ class ToDoFormController extends GetxController {
       isDone: toDoEdit!.isDone,
       timeLeft: DateTime.now(),
     );
+    // update selected to-do
     toDoListController.toDoList.asMap().forEach((int index, ToDoModel e) {
       if (e.id == toDoEdit!.id) {
         toDoListController.toDoList[index] = toDo;
       }
     });
+    // update to-do list
     toDoListController.update();
+    // save to-do list to shared preferences
     UserSharedPreferences.setToDoList(toDoListController.toDoList);
     Get.back();
     ToastUtil.snackBar(title: 'Success', message: 'To-Do update successfully');
   }
 
+  // show date picker for start date
   Future<void> pickStartDate(BuildContext context) async {
     titleFocusNode.unfocus();
     final DateTime? picked = await showDatePicker(
@@ -92,6 +101,7 @@ class ToDoFormController extends GetxController {
     }
   }
 
+  // show date picker for end date
   Future<void> pickEndDate(BuildContext context) async {
     titleFocusNode.unfocus();
     final DateTime? picked = await showDatePicker(
@@ -152,18 +162,4 @@ class ToDoFormController extends GetxController {
     }
     return null;
   }
-
-  // String? validateStartDate(String? value) {
-  //   if (value == null || value.trim().isEmpty) {
-  //     return 'Please select a start date';
-  //   }
-  //   return null;
-  // }
-
-  // String? validateEndDate(String? value) {
-  //   if (value == null || value.trim().isEmpty) {
-  //     return 'Please select an end date';
-  //   }
-  //   return null;
-  // }
 }

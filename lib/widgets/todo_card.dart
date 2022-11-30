@@ -89,7 +89,7 @@ class ToDoCard extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      const Text("Status", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorUtil.secondaryText)),
+                      const Text("Status", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorUtil.lightGray)),
                       const SizedBox(width: 10),
                       Text(
                         checkBoxValue ? 'Completed' : 'Incomplete',
@@ -138,16 +138,18 @@ class ToDoTime extends StatelessWidget {
     final DateTime today = DateTime(now.year, now.month, now.day);
     if (startDate != null && startDate == today && endDate != null) {
       endTime = endDate!.millisecondsSinceEpoch;
+      // if start & end day is same, add 23hours 59 minutes 59secs to end time
       if (startDate == today && endDate == today) {
         endTime = endDate!.millisecondsSinceEpoch + 84924000;
       }
     } else {
       endTime = 0;
     }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorUtil.secondaryText)),
+        Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: ColorUtil.lightGray)),
         const SizedBox(height: 10),
         if (showTimer)
           CountdownTimer(

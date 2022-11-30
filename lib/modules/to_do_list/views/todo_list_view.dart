@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_do_list/data/local_storage/shared_preferences.dart';
 import 'package:to_do_list/modules/to_do_list/controllers/todo_list_controller.dart';
 import 'package:to_do_list/routes/app_routes.dart';
 import 'package:to_do_list/utils/color_util.dart';
 import 'package:to_do_list/utils/toast_util.dart';
 import 'package:to_do_list/widgets/illustration.dart';
 import 'package:to_do_list/widgets/todo_card.dart';
-
-import '../../../data/local_storage/shared_preferences.dart';
 
 class ToDoListView extends GetView<ToDoListController> {
   const ToDoListView({Key? key}) : super(key: key);
@@ -61,9 +60,7 @@ class ToDoListView extends GetView<ToDoListController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(AppRoutes.toDoForm, arguments: null);
-        },
+        onPressed: () => Get.toNamed(AppRoutes.toDoForm, arguments: null),
         child: const Icon(Icons.add),
       ),
     );

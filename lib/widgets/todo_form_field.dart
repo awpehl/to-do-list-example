@@ -28,7 +28,7 @@ class ToDoFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(label, style: const TextStyle(color: ColorUtil.secondaryText, fontSize: 18)),
+        Text(label, style: const TextStyle(color: ColorUtil.lightGray, fontSize: 18)),
         const SizedBox(height: 10),
         TextFormField(
           maxLines: maxLines,
@@ -40,9 +40,9 @@ class ToDoFormField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             fillColor: ColorUtil.theme,
-            suffixIcon: onTap != null ? const Icon(Icons.keyboard_arrow_down, color: ColorUtil.secondaryText) : null,
+            hintStyle: TextStyle(color: ColorUtil.lightGray.withOpacity(0.5)),
+            suffixIcon: onTap != null ? const Icon(Icons.keyboard_arrow_down, color: ColorUtil.lightGray) : null,
             focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: ColorUtil.theme, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(0))),
-            hintStyle: TextStyle(color: ColorUtil.secondaryText.withOpacity(0.5)),
             enabledBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.black, width: 1.0), borderRadius: BorderRadius.all(Radius.circular(0))),
             focusedErrorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(0))),
             errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 2.0), borderRadius: BorderRadius.all(Radius.circular(0))),

@@ -17,7 +17,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.toDoForm,
       page: () => const ToDoFormView(),
-      binding: AddNewListBinding(),
+      binding: ToDoFormBinding(),
     ),
   ];
 }

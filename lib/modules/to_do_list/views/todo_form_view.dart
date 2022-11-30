@@ -10,9 +10,7 @@ class ToDoFormView extends GetView<ToDoFormController> {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return GestureDetector(
-      onTap: () {
-        controller.titleFocusNode.unfocus(); // un-focus to do title field
-      },
+      onTap: () => controller.titleFocusNode.unfocus(), // un-focus to do title field
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
