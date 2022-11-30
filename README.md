@@ -24,7 +24,8 @@ To do list Etiqa Mobile App Developer Flutter Assessment
  - Edit To-Do
  - Delete To-Do
  - Mark To-Do as Complete 
- Simple validations:
+
+Simple validations:
 - Title must not be empty
 - Start date must be smaller than or equal to end date
 - End Date must be larger than or equal to start date
