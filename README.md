@@ -49,7 +49,6 @@ To do list Etiqa Mobile App Developer Flutter Assessment
 │   └── widgets 
 │     
 └── test
-   
 ```
 ## Unit Test
 
